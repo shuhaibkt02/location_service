@@ -1,7 +1,8 @@
 import 'package:find_locate/data/provider/location_db.dart';
 import 'package:find_locate/data/repo/location_repo.dart';
 import 'package:find_locate/logic/location/location_bloc.dart';
-import 'package:find_locate/presentation/screen/home_screen.dart';
+// import 'package:find_locate/presentation/screen/home_screen.dart';
+import 'package:find_locate/presentation/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomeScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
