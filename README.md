@@ -11,7 +11,8 @@ This Flutter application demonstrates location-based services, enabling users to
 
 ## Screenshots
 
-![mapView](https://github.com/shuhaibkt02/location_service/assets/111732518/e02921f6-c266-4f99-b6f3-024c8a8fc859) ![locations](https://github.com/shuhaibkt02/location_service/assets/111732518/fd6b62d3-4953-4719-a468-b5e9f7feb5f2)
+![mapView](https://github.com/shuhaibkt02/location_service/assets/111732518/e02921f6-c266-4f99-b6f3-024c8a8fc859) ![locations](https://github.com/shuhaibkt02/location_service/assets/111732518/03802ee4-b1ce-49ad-92db-a6113a526072)
+
 
 
 
