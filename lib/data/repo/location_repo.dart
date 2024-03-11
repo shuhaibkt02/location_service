@@ -14,8 +14,6 @@ abstract class LocationRepository {
       {required double latitude, required double longitude});
   Future<List<LocationModel>> viewPosition();
   Future<LocationModel> getCurrentLocation();
-  bool checkDuplicate(
-      {required List<LocationModel> previous, required LocationModel current});
 }
 
 class SQLiteLocationRepository implements LocationRepository {
@@ -30,22 +28,14 @@ class SQLiteLocationRepository implements LocationRepository {
   }) async {
     final db = await database;
     if (db != null) {
-      bool locationExists =
-          checkDuplicate(previous: cacheList, current: location);
-
-      if (!locationExists) {
-        try {
-          await db.insert(
-            LocationDB().tableName,
-            location.toMap(),
-            conflictAlgorithm: ConflictAlgorithm.ignore,
-          );
-        } catch (e) {
-          // Handle database insertion errors
-          if (kDebugMode) {
-            print('Error inserting location: $e');
-          }
-        }
+      try {
+        await db.insert(
+          LocationDB().tableName,
+          location.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
+      } catch (e) {
+        throw Exception('Error inserting location: $e');
       }
     }
   }
@@ -62,10 +52,7 @@ class SQLiteLocationRepository implements LocationRepository {
           whereArgs: [latitude, longitude],
         );
       } catch (e) {
-        // Handle database deletion errors
-        if (kDebugMode) {
-          print('Error deleting location: $e');
-        }
+        throw Exception('Error deleting location: $e');
       }
     }
   }
@@ -82,10 +69,7 @@ class SQLiteLocationRepository implements LocationRepository {
             .map((position) => LocationModel.fromMap(position))
             .toList();
       } catch (e) {
-        // Handle database query errors
-        if (kDebugMode) {
-          print('Error querying locations: $e');
-        }
+        throw Exception('Error querying locations: $e');
       }
     }
     return locationList;
@@ -113,17 +97,5 @@ class SQLiteLocationRepository implements LocationRepository {
       placeholder: placeName,
     );
     return fetchLocation;
-  }
-
-  @override
-  bool checkDuplicate({
-    required List<LocationModel> previous,
-    required LocationModel current,
-  }) {
-    bool locationExists = previous.any((element) =>
-        element.latitude == current.latitude &&
-        element.longitude == current.longitude);
-
-    return locationExists;
   }
 }

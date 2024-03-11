@@ -33,6 +33,7 @@ class MapWidget extends StatelessWidget {
       markers: markers,
       polylines: {
         Polyline(
+          width: 3,
           color: Colors.redAccent,
           polylineId: const PolylineId('connect'),
           points: listPoint

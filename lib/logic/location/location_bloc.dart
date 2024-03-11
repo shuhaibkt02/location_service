@@ -9,6 +9,7 @@ part 'location_state.dart';
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationRepository locationRepository;
   List<LocationModel> cachePosition = [];
+
   String selectedPosition = '';
   LocationBloc({required this.locationRepository}) : super(LocationInitial()) {
     on<AddPosition>((event, emit) async {
@@ -17,14 +18,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         LocationModel currentLocation =
             await locationRepository.getCurrentLocation();
 
-        bool locationExists = locationRepository.checkDuplicate(
-            previous: cachePosition, current: currentLocation);
-
-        if (!locationExists) {
-          await locationRepository.addPosition(
-              location: currentLocation, cacheList: cachePosition);
-          cachePosition = await locationRepository.viewPosition();
-        }
+        await locationRepository.addPosition(
+            location: currentLocation, cacheList: cachePosition);
+        cachePosition = await locationRepository.viewPosition();
 
         emit(LocationLoaded(
             locationList: cachePosition, selectedPosition: selectedPosition));
@@ -60,7 +56,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     });
 
     on<SelectPosition>((event, emit) async {
-      // final listOfPosition = await locationRepository.viewPosition();
       emit(LocationLoaded(
           locationList: cachePosition, selectedPosition: event.placeholder));
     });
