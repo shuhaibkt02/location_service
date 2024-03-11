@@ -17,15 +17,15 @@ class CustomFloatingButton extends StatelessWidget {
         children: [
           FloatingActionButton(
               onPressed: () => context.read<LocationBloc>().add(AddPosition()),
-              child: const Text('add')),
-          FloatingActionButton(
+              child: const Icon(Icons.add)),
+          FloatingActionButton.extended(
               onPressed: () {
                 context.read<LocationBloc>().add(ViewPosition());
                 showModalBottomSheet(
                     context: context,
                     builder: (context) => const BottomSheetWidget());
               },
-              child: const Text('history')),
+              label: const Text('history')),
         ],
       ),
     );
